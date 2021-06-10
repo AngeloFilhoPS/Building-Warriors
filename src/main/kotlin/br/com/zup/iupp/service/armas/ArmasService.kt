@@ -9,7 +9,9 @@ import javax.inject.Singleton
 interface ArmasService {
 
 
+    fun buscaArma(id:Long):Boolean
     fun listaTodos():List<Arma>
     fun cadastraArma(arma: Arma)
+    fun deletaArma(id: Long)
 
 }

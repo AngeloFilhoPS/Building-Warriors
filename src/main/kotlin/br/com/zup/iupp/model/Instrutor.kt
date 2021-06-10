@@ -1,6 +1,8 @@
 package br.com.zup.iupp.model
 
 import io.micronaut.core.annotation.Introspected
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import javax.persistence.Embeddable
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -9,10 +11,10 @@ import javax.persistence.Id
 @Entity
 @Introspected
 class Instrutor(
-    val nome:String,
+    var nome:String,
     val cpf:String,
-    val descricao:String,
-    val numArmas:Int,
+    var descricao:String,
+    var numArmas:Int,
 ) {
     @Id
     @GeneratedValue

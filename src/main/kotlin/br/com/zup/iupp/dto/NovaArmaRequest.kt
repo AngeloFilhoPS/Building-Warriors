@@ -8,6 +8,7 @@ class NovaArmaRequest(
     val idInstrutor:Long
 ) {
     fun toModel(): Arma {
+
         return Arma(nome,calibre,idInstrutor)
     }
 

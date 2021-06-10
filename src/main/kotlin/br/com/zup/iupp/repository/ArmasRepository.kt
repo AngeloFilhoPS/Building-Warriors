@@ -7,4 +7,6 @@ import io.micronaut.data.jpa.repository.JpaRepository
 
 @Repository
 interface ArmasRepository:JpaRepository<Arma,Long> {
+    override fun existsById(id:Long): Boolean
+
 }

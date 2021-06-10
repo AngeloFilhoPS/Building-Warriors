@@ -7,8 +7,9 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
+import javax.transaction.Transactional
 
-
+@Transactional
 @Controller("/armas")
 class CadastroArmaController(private val armasService: ArmasService,private val instrutorService: InstrutorService) {
 
@@ -17,14 +18,15 @@ class CadastroArmaController(private val armasService: ArmasService,private val 
 
         val possivelInstrutor = instrutorService.buscaInstrutor(request.idInstrutor)
         if(possivelInstrutor){
+            val arma = request.toModel()
+            armasService.cadastraArma(arma)
+            return (HttpResponse.created(arma))
 
-            return HttpResponse.notFound()
         }
 
-        val arma = request.toModel()
-        armasService.cadastraArma(arma)
+        return HttpResponse.notFound()
 
-        return (HttpResponse.created(arma))
+
     }
 
 }

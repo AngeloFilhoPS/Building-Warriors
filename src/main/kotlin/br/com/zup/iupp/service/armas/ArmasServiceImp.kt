@@ -9,7 +9,9 @@ import javax.inject.Inject
 
 class ArmaServiceImp(
     @Inject
-    private val armasRepository: ArmasRepository
+    private val armasRepository: ArmasRepository,
+    @Inject
+    private val instrutorRepository: InstrutorRepository
 ) : ArmasService {
 
 
@@ -18,8 +20,21 @@ class ArmaServiceImp(
     }
 
     override fun cadastraArma(arma: Arma) {
-        armasRepository.save(arma)
+
+        val possivelInstrutor = instrutorRepository.findById(arma.idInstrutor)
+
+        if (possivelInstrutor.isPresent){
+            val armaComInstrutor = Arma(arma.nome,arma.calibre,arma.idInstrutor,possivelInstrutor.get())
+            armasRepository.save(armaComInstrutor)
+        }
 
     }
 
+    override fun buscaArma(id: Long): Boolean {
+        return armasRepository.existsById(id)
+    }
+
+    override fun deletaArma(id: Long) {
+        armasRepository.deleteById(id)
+    }
 }
