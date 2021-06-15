@@ -10,14 +10,15 @@ import javax.persistence.Id
 
 @Entity
 @Introspected
-class Instrutor(
-    var nome:String,
-    val cpf:String,
-    var descricao:String,
-    var numArmas:Int,
-) {
+data class Instrutor(
+    var nome:String="",
+    val cpf:String="",
+    var descricao:String="",
+    var numArmas:Int=0,
     @Id
     @GeneratedValue
     var id: Long? = null
+) {
+
 
 }

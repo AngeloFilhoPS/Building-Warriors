@@ -10,3 +10,13 @@ datasources:
     schema-generate: CREATE_DROP
     dialect: H2
 jpa.default.properties.hibernate.hbm2ddl.auto: update
+consul:
+  client:
+    registration:
+      check:
+        http: true
+
+
+endpoints:
+  health:
+    details-visible: ANONYMOUS

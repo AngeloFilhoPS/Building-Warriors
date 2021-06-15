@@ -13,4 +13,5 @@ data class NovoInstrutorRequest(
         return Instrutor(nome, cpf, descricao,numArmas)
     }
 
+
 }

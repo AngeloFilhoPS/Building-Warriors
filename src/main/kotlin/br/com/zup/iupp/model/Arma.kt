@@ -7,17 +7,18 @@ import javax.persistence.*
 
 @Entity
 @Introspected
-class Arma (
-    val nome:String,
-    val calibre:String,
-    val idInstrutor:Long,
+data class Arma (
+    val nome:String="",
+    val calibre:String="",
+    val idInstrutor:Long=0,
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    val instrutor:Instrutor?=null
-        ){
+    val instrutor:Instrutor?=null,
     @Id
     @GeneratedValue
     var id: Long? = null
+        ){
+
 
 
 }

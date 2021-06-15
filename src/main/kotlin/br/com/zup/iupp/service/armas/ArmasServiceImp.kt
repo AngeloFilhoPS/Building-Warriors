@@ -5,12 +5,11 @@ import br.com.zup.iupp.model.Instrutor
 import br.com.zup.iupp.repository.ArmasRepository
 import br.com.zup.iupp.repository.InstrutorRepository
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
+@Singleton
 class ArmaServiceImp(
-    @Inject
     private val armasRepository: ArmasRepository,
-    @Inject
     private val instrutorRepository: InstrutorRepository
 ) : ArmasService {
 

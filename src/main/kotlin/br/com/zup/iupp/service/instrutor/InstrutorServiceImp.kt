@@ -1,13 +1,14 @@
 package br.com.zup.iupp.service.instrutor
 
-import br.com.zup.iupp.dto.PatchInstrutorRequest
+import br.com.zup.iupp.dto.NovoInstrutorRequest
 import br.com.zup.iupp.model.Instrutor
 import br.com.zup.iupp.repository.ArmasRepository
 import br.com.zup.iupp.repository.InstrutorRepository
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class InstrutorServiceImp(
+@Singleton
+class InstrutorServiceImp (
     @Inject
     private val instrutorRepository: InstrutorRepository,
     @Inject val armasRepository: ArmasRepository
@@ -31,7 +32,7 @@ class InstrutorServiceImp(
         instrutorRepository.deleteById(id)
     }
 
-    override fun atualizaInstrutor(id: Long,patchInstrutorRequest: PatchInstrutorRequest) {
+    override fun atualizaInstrutor(id: Long,patchInstrutorRequest: NovoInstrutorRequest) {
         val instrutorAtualizado = instrutorRepository.findById(id).get()
 
         instrutorAtualizado.nome=patchInstrutorRequest.nome

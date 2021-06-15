@@ -1,8 +1,7 @@
 package br.com.zup.iupp.service.instrutor
 
-import br.com.zup.iupp.dto.PatchInstrutorRequest
+import br.com.zup.iupp.dto.NovoInstrutorRequest
 import br.com.zup.iupp.model.Instrutor
-import java.util.*
 import javax.inject.Singleton
 
 @Singleton
@@ -12,6 +11,6 @@ interface InstrutorService {
     fun cadastraInstrutor(instrutor: Instrutor)
     fun buscaInstrutor(id:Long): Boolean
     fun deletaInstrutor(id:Long)
-    fun atualizaInstrutor(id:Long,patchInstrutorRequest: PatchInstrutorRequest)
+    fun atualizaInstrutor(id:Long,patchInstrutorRequest: NovoInstrutorRequest)
 
 }
