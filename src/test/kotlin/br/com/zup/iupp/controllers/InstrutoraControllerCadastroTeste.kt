@@ -35,6 +35,79 @@ class InstrutorControllerCadastraTeste: AnnotationSpec(){
 
     }
 
+    @Test
+    fun `deve listar o instrutor que foi cadastrado`(){
+
+        val request= NovoInstrutorRequest("Angelo","02315527360","top",1)
+        val instrutor= request.toModel()
+        val response = NovoInstrutorRequest(instrutor.nome,instrutor.cpf,instrutor.descricao,instrutor.numArmas)
+
+
+        every { instrutorService.listaTodos() } answers { listOf(instrutor)}
+
+        instrutorController.cadastra(response)
+
+        val lista = instrutorController.lista()
+
+
+        lista.size shouldBe 1
+
+    }
+
+    @Test
+    fun `deve deletar o instrutor que foi cadastrado`(){
+
+        val request= NovoInstrutorRequest("Angelo","02315527360","top",1)
+        val instrutor= request.toModel()
+        val response = NovoInstrutorRequest(instrutor.nome,instrutor.cpf,instrutor.descricao,instrutor.numArmas)
+
+
+        every {
+            instrutorService.deletaInstrutor(any())
+        } answers {}
+
+
+        val deletado = instrutor.id?.let { instrutorController.deleta(it) }
+
+
+        if (deletado != null) {
+            deletado.status shouldBe HttpStatus.OK
+        }
+
+    }
+
+    @Test
+    fun `deve editar um instrutor caso ele exista`(){
+
+        val request= NovoInstrutorRequest("Angelo","02315527360","top",1)
+        val instrutor= request.toModel()
+        val response = NovoInstrutorRequest(instrutor.nome,instrutor.cpf,instrutor.descricao,instrutor.numArmas)
+
+        var atualizado = NovoInstrutorRequest("Angelo","02313329240","top",2)
+
+
+        every {
+             instrutorService.atualizaInstrutor(any(),any())
+        } answers {}
+
+        val result  = instrutor.id?.let { instrutorController.edita(it,atualizado) }
+
+        if (result != null) {
+            result.status shouldBe HttpStatus.OK
+        }
+        if (result != null) {
+            result.body() shouldBe atualizado
+        }
+
+    }
+
+
+
+
+
+
+
+
 
 
 }
