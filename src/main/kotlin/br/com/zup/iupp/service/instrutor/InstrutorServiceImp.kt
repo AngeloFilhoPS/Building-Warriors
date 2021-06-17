@@ -9,9 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class InstrutorServiceImp (
-    @Inject
     private val instrutorRepository: InstrutorRepository,
-    @Inject val armasRepository: ArmasRepository
 ) : InstrutorService {
 
 
