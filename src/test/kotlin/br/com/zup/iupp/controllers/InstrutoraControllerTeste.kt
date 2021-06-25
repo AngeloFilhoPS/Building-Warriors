@@ -67,7 +67,7 @@ class InstrutorControllerCadastraTeste: AnnotationSpec(){
         } answers {}
 
 
-        val deletado = instrutor.id?.let { instrutorController.deleta(it) }
+        val deletado = instrutor.id?.let { instrutorController.deleta(it.toString()) }
 
 
         if (deletado != null) {
@@ -90,7 +90,7 @@ class InstrutorControllerCadastraTeste: AnnotationSpec(){
              instrutorService.atualizaInstrutor(any(),any())
         } answers {}
 
-        val result  = instrutor.id?.let { instrutorController.edita(it,atualizado) }
+        val result  = instrutor.id?.let { instrutorController.edita(it.toString(),atualizado) }
 
         if (result != null) {
             result.status shouldBe HttpStatus.OK

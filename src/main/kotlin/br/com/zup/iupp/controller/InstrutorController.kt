@@ -5,7 +5,7 @@ import br.com.zup.iupp.model.Instrutor
 import br.com.zup.iupp.service.instrutor.InstrutorService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
-import javax.transaction.Transactional
+import java.util.*
 
 @Controller("/instrutores")
 class InstrutorController(private val instrutorService: InstrutorService) {
@@ -26,12 +26,11 @@ class InstrutorController(private val instrutorService: InstrutorService) {
 
 
     @Delete("/{id}")
-    @Transactional
-    fun deleta(@PathVariable id: Long): HttpResponse<Any> {
+    fun deleta(@PathVariable id: String): HttpResponse<Any> {
         val possivelInstrutor = instrutorService.buscaInstrutor(id)
 
 
-        if (possivelInstrutor) {
+        if (possivelInstrutor!=null) {
             instrutorService.deletaInstrutor(id)
             return HttpResponse.ok()
         }
@@ -40,12 +39,11 @@ class InstrutorController(private val instrutorService: InstrutorService) {
     }
 
     @Patch("/{id}")
-    @Transactional
-    fun edita(@PathVariable id:Long, @Body request : NovoInstrutorRequest):HttpResponse<Any>{
+    fun edita(@PathVariable id: String, @Body request: NovoInstrutorRequest):HttpResponse<Any>{
 
         val possivelInstrutor =  instrutorService.buscaInstrutor(id)
 
-        if(possivelInstrutor){
+        if(possivelInstrutor.isPresent){
             instrutorService.atualizaInstrutor(id,request)
             return HttpResponse.ok(request)
         }

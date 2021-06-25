@@ -3,10 +3,10 @@ package br.com.zup.iupp.dto
 import br.com.zup.iupp.model.Instrutor
 
 data class NovoInstrutorRequest(
-    val nome:String,
-    val cpf:String,
-    val descricao:String,
-    val numArmas:Int,
+    var nome:String,
+    var cpf:String,
+    var descricao:String,
+    var numArmas:Int,
 ) {
 
     fun toModel():Instrutor{

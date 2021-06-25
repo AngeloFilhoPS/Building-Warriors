@@ -3,13 +3,13 @@ package br.com.zup.iupp.services
 import br.com.zup.iupp.dto.NovoInstrutorRequest
 import br.com.zup.iupp.model.Instrutor
 import br.com.zup.iupp.repository.InstrutorRepository
-import br.com.zup.iupp.service.instrutor.InstrutorService
 import br.com.zup.iupp.service.instrutor.InstrutorServiceImp
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest
 import io.mockk.every
 import io.mockk.mockk
+import java.util.*
 
 @MicronautTest
 class InstrutorServiceTest:AnnotationSpec() {
@@ -24,7 +24,7 @@ val instrutorService = InstrutorServiceImp(instrutorRepository)
 
     @BeforeEach
     fun setup(){
-        instrutor= Instrutor("Angelo","02313329240","top",1,1)
+        instrutor= Instrutor("Angelo","02313329240","top",1, UUID.randomUUID())
         instrutorAtualizado= NovoInstrutorRequest("Angelo 2","02313329233","top",1)
     }
 
@@ -32,7 +32,7 @@ val instrutorService = InstrutorServiceImp(instrutorRepository)
     @Test
     fun `deve testar cadastro`(){
 
-        every { instrutorRepository.save(any()) } answers {instrutor}
+        every { instrutorRepository.salva(any()) } answers {instrutor}
 
        val result = instrutorService.cadastraInstrutor(instrutor)
        result shouldBe Unit
@@ -42,7 +42,7 @@ val instrutorService = InstrutorServiceImp(instrutorRepository)
     @Test
     fun `deve testar listagem`(){
 
-        every { instrutorRepository.findAll() } answers { listOf(instrutor)}
+        every { instrutorRepository.listaTodos() } answers { listOf(instrutor)}
 
         val result = instrutorService.listaTodos()
 
@@ -54,9 +54,9 @@ val instrutorService = InstrutorServiceImp(instrutorRepository)
 
     @Test
     fun `deve testar busca`(){
-        every { instrutorRepository.existsById(any()) } answers {true}
+        every { instrutorRepository.encontraPorId(any()) } answers { Optional.of(Instrutor())}
 
-        var result = instrutor.id?.let { instrutorService.buscaInstrutor(it) }
+        var result = instrutor.id?.let { instrutorService.buscaInstrutor(it.toString()) }
 
         result shouldBe true
 
@@ -67,7 +67,7 @@ val instrutorService = InstrutorServiceImp(instrutorRepository)
     fun `deve testar delecao`(){
         every { instrutorRepository.deleteById(any()) } answers {}
 
-        var result = instrutor.id?.let { instrutorService.deletaInstrutor(it) }
+        var result = instrutor.id?.let { instrutorService.deletaInstrutor(it.toString()) }
 
         result shouldBe Unit
     }
@@ -76,10 +76,10 @@ val instrutorService = InstrutorServiceImp(instrutorRepository)
     @Test
     fun `deve testar atualizacao`(){
 
-        every { instrutorRepository.update(any()) } answers {instrutor}
-        every { instrutorRepository.findById(any()).get() } answers {instrutor}
+        every { instrutorRepository.atualiza(any(),any()) } answers {}
+        every { instrutorRepository.encontraPorId(any()).get() } answers {instrutor}
 
-        var result= instrutor.id?.let { instrutorService.atualizaInstrutor(it,instrutorAtualizado) }
+        var result= instrutor.id?.let { instrutorService.atualizaInstrutor(it.toString(),instrutorAtualizado) }
 
         result shouldBe Unit
     }

@@ -1,11 +1,14 @@
 package br.com.zup.iupp.repository
 
 import br.com.zup.iupp.model.Instrutor
-import io.micronaut.data.annotation.Repository
-import io.micronaut.data.jpa.repository.JpaRepository
 import java.util.*
 
-@Repository
-interface InstrutorRepository : JpaRepository<Instrutor,Long> {
-    override fun existsById(id:Long): Boolean
+interface InstrutorRepository  {
+
+    fun salva(instrutor: Instrutor)
+    fun listaTodos():List<Instrutor>
+    fun deleteById(id:String)
+    fun encontraPorId(id:String):Optional<Instrutor>
+    fun atualiza(instrutor: Instrutor,id:UUID)
+
 }

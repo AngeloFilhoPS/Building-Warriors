@@ -2,9 +2,8 @@ package br.com.zup.iupp.service.instrutor
 
 import br.com.zup.iupp.dto.NovoInstrutorRequest
 import br.com.zup.iupp.model.Instrutor
-import br.com.zup.iupp.repository.ArmasRepository
 import br.com.zup.iupp.repository.InstrutorRepository
-import javax.inject.Inject
+import java.util.*
 import javax.inject.Singleton
 
 @Singleton
@@ -14,30 +13,37 @@ class InstrutorServiceImp (
 
 
     override fun listaTodos(): List<Instrutor> {
-        return instrutorRepository.findAll()
+        return instrutorRepository.listaTodos()
     }
 
     override fun cadastraInstrutor(instrutor: Instrutor) {
-         instrutorRepository.save(instrutor)
+        instrutorRepository.salva(instrutor)
+
+//         instrutorRepository.save(instrutor)
     }
 
-    override fun buscaInstrutor(id: Long): Boolean {
-        return instrutorRepository.existsById(id)
+    override fun buscaInstrutor(id: String): Optional<Instrutor> {
+        return instrutorRepository.encontraPorId(id)
     }
 
-    override fun deletaInstrutor(id: Long) {
+    override fun deletaInstrutor(id: String) {
 
         instrutorRepository.deleteById(id)
     }
 
-    override fun atualizaInstrutor(id: Long,patchInstrutorRequest: NovoInstrutorRequest) {
-        val instrutorAtualizado = instrutorRepository.findById(id).get()
+    override fun atualizaInstrutor(id: String,patchInstrutorRequest: NovoInstrutorRequest) {
+
+
+        var instrutorAtualizado = instrutorRepository.encontraPorId(id).get()
+        val id = UUID.fromString(id)
+
 
         instrutorAtualizado.nome=patchInstrutorRequest.nome
         instrutorAtualizado.descricao=patchInstrutorRequest.descricao
+        instrutorAtualizado.cpf=patchInstrutorRequest.cpf
         instrutorAtualizado.numArmas=patchInstrutorRequest.numArmas
 
-        instrutorRepository.update(instrutorAtualizado)
+        instrutorRepository.atualiza(instrutorAtualizado,id)
 
     }
 }
