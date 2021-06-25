@@ -24,3 +24,13 @@ consul:
 endpoints:
   health:
     details-visible: ANONYMOUS
+
+# Comandos importantes
+#  - docker run --name scyllaU -d scylladb/scylla:4.1.0 --overprovisioned 1 --smp 1 -p 9042:9042
+#  - docker exec -it scyllaU nodetool status
+#    - docker exec -it scyllaU cqlsh
+#  - cqlsh> CREATE KEYSPACE clube WITH REPLICATION ={ 'class' : 'SimpleStrategy', 'replication_factor' : 1};
+#  - cqlsh> USE clube;
+#  - cqlsh:clube> CREATE TABLE instrutores (id UUID, nome TEXT, cpf TEXT, descricao TEXT, numArmas int, PRIMARY KEY((id)));
+#  - cqlsh:clube> SELECT * FROM instrutores;
+#    - cqlsh:clube> INSERT INTO instrutores(id, cpf, descricao, nome, numarmas) VALUES (5223fb65-8371-4443-8774-008fe2becfa9 , '41602349096', 'top' , 'Angelo' , 4);
